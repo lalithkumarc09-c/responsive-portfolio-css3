@@ -1,0 +1,887 @@
+/* ==========================================================================
+   ADVANCED CSS3 & RESPONSIVE ARCHITECTURE - CSS GRID & FLEXBOX ENGINE
+   Demonstrating:
+   1. CSS Grid for complex, two-dimensional page layouts
+   2. Flexbox for localized component alignment
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. HERO SECTION (2D CSS Grid Layout)
+   -------------------------------------------------------------------------- */
+.hero-section {
+    min-height: calc(100vh - 108px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 60px 0 80px 0;
+    overflow: hidden;
+}
+
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+[data-theme="dark"] .status-pill {
+    color: #4ade80;
+    background: rgba(34, 197, 94, 0.15);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.hero-title {
+    margin-bottom: 12px;
+}
+
+.hero-typing-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    min-height: 38px;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.25em;
+    background-color: var(--primary);
+    animation: blinkCursor 0.9s infinite;
+}
+
+@keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    max-width: 580px;
+}
+
+.hero-college-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-college-badge i {
+    color: var(--primary);
+}
+
+.hero-cta-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+/* Hero Right Profile & Floating Badges */
+.hero-image-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    width: 320px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    transition: transform var(--transition-normal);
+}
+
+.profile-card:hover {
+    transform: translateY(-6px) rotate(1deg);
+    border-color: var(--border-glow);
+}
+
+.profile-photo-container {
+    width: 100%;
+    height: 320px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #0f172a;
+    position: relative;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform var(--transition-slow);
+}
+
+.profile-card:hover .profile-photo {
+    transform: scale(1.04);
+}
+
+.profile-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 4px 4px 4px;
+}
+
+.profile-name-tag h4 {
+    font-size: 1.05rem;
+    margin-bottom: 2px;
+}
+
+.profile-name-tag p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.floating-badge {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(12px);
+    animation: floatAnimation 4s ease-in-out infinite;
+    z-index: 2;
+}
+
+.floating-badge i {
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+.floating-badge strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--text-main);
+}
+
+.floating-badge span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* --------------------------------------------------------------------------
+   2. ABOUT SECTION (2D Bento Grid Architecture)
+   -------------------------------------------------------------------------- */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 28px;
+}
+
+.about-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.about-text {
+    font-size: 1.05rem;
+    margin-bottom: 18px;
+    line-height: 1.7;
+}
+
+.about-education {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    margin-top: 14px;
+}
+
+.about-education i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.about-education h4 {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+}
+
+.about-education p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+/* 2D Metrics Sub-Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.metric-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.metric-box:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-md);
+}
+
+.metric-icon {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 14px;
+}
+
+.metric-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   3. TECHNICAL SKILLS SECTION (2D CSS Grid Matrix)
+   -------------------------------------------------------------------------- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.skill-category-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.skill-category-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-md);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.category-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.category-title {
+    font-size: 1.2rem;
+}
+
+.skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.skill-info span:last-child {
+    color: var(--primary);
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.skill-level-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.skill-fill {
+    height: 100%;
+    background: var(--gradient-accent);
+    border-radius: var(--radius-full);
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   4. FEATURED PROJECTS BENTO GRID (Complex 2D Layout)
+   -------------------------------------------------------------------------- */
+.project-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    padding: 8px 20px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: var(--gradient-accent);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(var(--primary-rgb), 0.3);
+}
+
+
+
+.bento-preview-banner {
+    height: 200px;
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.12) 0%, rgba(var(--accent-rgb), 0.18) 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.banner-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    opacity: 0.45;
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+.bento-card:hover .banner-icon {
+    transform: scale(1.15) rotate(4deg);
+    opacity: 0.85;
+}
+
+.banner-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.bento-content {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.bento-title {
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.bento-desc {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.bento-features {
+    list-style: none;
+    margin-bottom: 22px;
+    display: grid;
+    gap: 8px;
+}
+
+.bento-feature-item {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bento-feature-item i {
+    color: #10b981;
+    font-size: 0.8rem;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.tag-pill {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: rgba(var(--primary-rgb), 0.08);
+    color: var(--primary);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(var(--primary-rgb), 0.15);
+}
+
+.project-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.project-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+    transition: color var(--transition-fast);
+}
+
+.project-link-btn:hover {
+    color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   5. CERTIFICATES & HACKATHONS (Responsive 2D Auto-Fit Grid)
+   -------------------------------------------------------------------------- */
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 24px;
+}
+
+.certificate-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+}
+
+.certificate-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-md);
+}
+
+.cert-thumb-container {
+    width: 100%;
+    height: 175px;
+    overflow: hidden;
+    position: relative;
+    background: #1e293b;
+}
+
+.cert-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.certificate-card:hover .cert-thumb {
+    transform: scale(1.08);
+}
+
+.cert-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    color: #ffffff;
+    font-size: 1rem;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.certificate-card:hover .cert-hover-overlay {
+    opacity: 1;
+}
+
+.cert-details {
+    padding: 18px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cert-issuer-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cert-title {
+    font-size: 0.98rem;
+    line-height: 1.4;
+    color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   6. CONTACT SECTION (2D CSS Grid Layout)
+   -------------------------------------------------------------------------- */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 36px;
+}
+
+.contact-info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-channel-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.contact-channel-card:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.contact-channel-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.channel-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.channel-info h4 {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.channel-info a {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: color var(--transition-fast);
+}
+
+.channel-info a:hover {
+    color: var(--primary);
+}
+
+.copy-btn {
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+}
+
+.copy-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Contact Form */
+.contact-form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 34px;
+    box-shadow: var(--shadow-sm);
+}
+
+.contact-form-card h3 {
+    margin-bottom: 6px;
+}
+
+.contact-form-card p {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* --------------------------------------------------------------------------
+   7. FOOTER (Flexbox Localized Alignment)
+   -------------------------------------------------------------------------- */
+footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-subtle);
+    padding: 50px 0 26px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.footer-brand h3 {
+    font-size: 1.25rem;
+    margin-bottom: 4px;
+}
+
+.footer-brand p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.footer-social-links {
+    display: flex;
+    gap: 12px;
+}
+
+.social-pill {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all var(--transition-fast);
+}
+
+.social-pill:hover {
+    color: #ffffff;
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.back-to-top {
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+}
+
+.back-to-top:hover {
+    color: var(--primary);
+}
